@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Presupuesto familiar mensual</title>
+<style>
+  body {
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    margin: 0;
+    padding: 16px;
+    background: #f5f5f5;
+  }
+
+  h1, h2 {
+    margin: 8px 0;
+    color: #2f4f2f;
+  }
+
+  .container {
+    max-width: 900px;
+    margin: 0 auto;
+    background: #ffffff;
+    padding: 16px;
+    border-radius: 8px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+  }
+
+  .section {
+    margin-top: 16px;
+    padding: 12px;
+    border-radius: 6px;
+    border: 1px solid #dcdcdc;
+    background: #fafafa;
+  }
+
+  .section-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .section-header h2 {
+    font-size: 1.1rem;
+  }
+
+  button {
+    border: none;
+    padding: 6px 10px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 0.9rem;
+  }
+
+  .btn-add {
+    background: #2f4f2f;
+    color: #ffffff;
+  }
+
+  .btn-add:hover {
+    opacity: 0.9;
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 8px;
+    font-size: 0.9rem;
+  }
+
+  th, td {
+    border-bottom: 1px solid #e0e0e0;
+    padding: 6px 4px;
+  }
+
+  th {
+    text-align: left;
+    background: #f0f0f0;
+  }
+
+  input[type="text"],
+  input[type="number"] {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 4px 6px;
+    border-radius: 4px;
+    border: 1px solid #cccccc;
+    font-size: 0.9rem;
+  }
+
+  .totals {
+    margin-top: 16px;
+    padding: 12px;
+    border-radius: 6px;
+    background: #2f4f2f;
+    color: #ffffff;
+  }
+
+  .totals-row {
+    display: flex;
+    justify-content: space-between;
+    margin: 4px 0;
+    font-size: 0.95rem;
+  }
+
+  .totals-row strong {
+    font-weight: 600;
+  }
+</style>
+</head>
+<body>
+<div class="container">
+  <h1>Presupuesto familiar mensual</h1>
+
+  <!-- INGRESOS -->
+  <div class="section">
+    <div class="section-header">
+      <h2>Ingresos mensuales</h2>
+      <button class="btn-add" onclick="addRow('ingresos')">Agregar ingreso</button>
+    </div>
+    <table>
+      <thead>
+        <tr>
+          <th>Fuente</th>
+          <th>Monto</th>
+        </tr>
+      </thead>
+      <tbody id="tbody-ingresos">
+        <tr>
+          <td>Sueldo principal</td>
+          <td><input type="number" min="0" step="0.01" class="amount ingreso" data-section="ingresos"></td>
+        </tr>
+        <tr>
+          <td>Ingresos adicionales</td>
+          <td><input type="number" min="0" step="0.01" class="amount ingreso" data-section="ingresos"></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Gastos fijos -->
+  <div class="section">
+    <div class="section-header">
+      <h2>Gastos fijos mensuales</h2>
+      <button class="btn-add" onclick="addRow('fijos')">Agregar ítem</button>
+    </div>
+    <table>
+      <thead>
+        <tr>
+          <th>Concepto</th>
+          <th>Monto mensual</th>
+        </tr>
+      </thead>
+      <tbody id="tbody-fijos">
+        <tr>
+          <td>Comida en casa</td>
+          <td><input type="number" min="0" step="0.01" class="amount" data-section="fijos"></td>
+        </tr>
+        <tr>
+          <td>Condominio / alquiler</td>
+          <td><input type="number" min="0" step="0.01" class="amount" data-section="fijos"></td>
+        </tr>
+        <tr>
+          <td>Internet</td>
+          <td><input type="number" min="0" step="0.01" class="amount" data-section="fijos"></td>
+        </tr>
+        <tr>
+          <td>Electricidad</td>
+          <td><input type="number" min="0" step="0.01" class="amount" data-section="fijos"></td>
+        </tr>
+        <tr>
+          <td>Gasolina / transporte</td>
+          <td><input type="number" min="0" step="0.01" class="amount" data-section="fijos"></td>
+        </tr>
+        <tr>
+          <td>Medicina</td>
+          <td><input type="number" min="0" step="0.01" class="amount" data-section="fijos"></td>
+        </tr>
+        <tr>
+          <td>Peluquería / cuidado personal</td>
+          <td><input type="number" min="0" step="0.01" class="amount" data-section="fijos"></td>
+        </tr>
+        <tr>
+          <td>Comida fuera de casa</td>
+          <td><input type="number" min="0" step="0.01" class="amount" data-section="fijos"></td>
+        </tr>
+        <tr>
+          <td>Odontología</td>
+          <td><input type="number" min="0" step="0.01" class="amount" data-section="fijos"></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Gastos ocasionales -->
+  <div class="section">
+    <div class="section-header">
+      <h2>Gastos ocasionales</h2>
+      <button class="btn-add" onclick="addRow('ocasionales')">Agregar ítem</button>
+    </div>
+    <table>
+      <thead>
+        <tr>
+          <th>Concepto</th>
+          <th>Monto mensual estimado</th>
+        </tr>
+      </thead>
+      <tbody id="tbody-ocasionales">
+        <tr>
+          <td>Ropa y zapatos</td>
+          <td><input type="number" min="0" step="0.01" class="amount" data-section="ocasionales"></td>
+        </tr>
+        <tr>
+          <td>Viajes / vacaciones</td>
+          <td><input type="number" min="0" step="0.01" class="amount" data-section="ocasionales"></td>
+        </tr>
+        <tr>
+          <td>Regalos y eventos especiales</td>
+          <td><input type="number" min="0" step="0.01" class="amount" data-section="ocasionales"></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Deudas -->
+  <div class="section">
+    <div class="section-header">
+      <h2>Deudas y compromisos</h2>
+      <button class="btn-add" onclick="addRow('deudas')">Agregar ítem</button>
+    </div>
+    <table>
+      <thead>
+        <tr>
+          <th>Concepto</th>
+          <th>Pago mensual</th>
+        </tr>
+      </thead>
+      <tbody id="tbody-deudas">
+        <tr>
+          <td>Tarjeta de crédito</td>
+          <td><input type="number" min="0" step="0.01" class="amount" data-section="deudas"></td>
+        </tr>
+        <tr>
+          <td>Préstamo personal</td>
+          <td><input type="number" min="0" step="0.01" class="amount" data-section="deudas"></td>
+        </tr>
+        <tr>
+          <td>Otros compromisos</td>
+          <td><input type="number" min="0" step="0.01" class="amount" data-section="deudas"></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Totales -->
+  <div class="totals">
+    <div class="totals-row">
+      <span>Total ingresos</span>
+      <strong id="total-ingresos">0.00</strong>
+    </div>
+    <div class="totals-row">
+      <span>Total gastos fijos</span>
+      <strong id="total-fijos">0.00</strong>
+    </div>
+    <div class="totals-row">
+      <span>Total gastos ocasionales</span>
+      <strong id="total-ocasionales">0.00</strong>
+    </div>
+    <div class="totals-row">
+      <span>Total deudas</span>
+      <strong id="total-deudas">0.00</strong>
+    </div>
+    <hr>
+    <div class="totals-row">
+      <span><strong>Saldo disponible</strong></span>
+      <strong id="saldo">0.00</strong>
+    </div>
+  </div>
+</div>
+
+<script>
+  function recalcTotals() {
+    const totals = { ingresos: 0, fijos: 0, ocasionales: 0, deudas: 0 };
+
+    const inputs = document.querySelectorAll('.amount');
+    inputs.forEach(input => {
+      const section = input.dataset.section;
+      if (!section) return;
+      const val = parseFloat(input.value.replace(",", "."));
+      if (!isNaN(val)) totals[section] += val;
+    });
+
+    document.getElementById('total-ingresos').textContent = totals.ingresos.toFixed(2);
+    document.getElementById('total-fijos').textContent = totals.fijos.toFixed(2);
+    document.getElementById('total-ocasionales').textContent = totals.ocasionales.toFixed(2);
+    document.getElementById('total-deudas').textContent = totals.deudas.toFixed(2);
+
+    const saldo = totals.ingresos - (totals.fijos + totals.ocasionales + totals.deudas);
+    document.getElementById('saldo').textContent = saldo.toFixed(2);
+  }
+
+  function addRow(section) {
+    const tbody = document.getElementById('tbody-' + section);
+    const tr = document.createElement('tr');
+    tr.innerHTML = `
+      <td><input type="text" placeholder="Nuevo ítem"></td>
+      <td><input type="number" min="0" step="0.01" class="amount" data-section="${section}"></td>
+    `;
+    tbody.appendChild(tr);
+  }
+
+  document.addEventListener('input', function (e) {
+    if (e.target.classList.contains('amount')) recalcTotals();
+  });
+</script>
+
+</body>
+</html>
